@@ -1,0 +1,17 @@
+[33mcommit 71a6072171c231b4d1577c4f4db4e82af529cf83[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/feature/backend-foundation[m[33m, [m[1;32mfeature/backend-foundation[m[33m)[m
+Author: hema <hymasyf83@gmail.com>
+Date:   Wed Jun 17 16:38:02 2026 +0300
+
+    Build backend foundation database structure
+
+[33mcommit 454ff91faceb0501e1a19c8ff32003f3b3ef6f90[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: hema <hymasyf83@gmail.com>
+Date:   Wed Jun 17 15:10:19 2026 +0300
+
+    Add health check API endpoint
+
+[33mcommit 1b0a654621b333f482073af4ca6518984791ceba[m
+Author: hema <hymasyf83@gmail.com>
+Date:   Mon Jun 15 14:49:43 2026 +0300
+
+    Initial Laravel project setup

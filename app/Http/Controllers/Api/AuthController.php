@@ -6,11 +6,13 @@ use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ForgotPasswordRequest;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
-
 {
+
     public function login(LoginRequest $request, AuthService $authService)
     {
         $result = $authService->login(
@@ -37,5 +39,29 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Logout successful'
         ]);
+    }
+
+
+    public function forgotPassword(ForgotPasswordRequest $request, AuthService $authService)
+    {
+        $authService->forgotPassword($request->input('username'));
+
+        return response()->json([
+            'message' => 'تم استلام طلبك. سيتم التواصل معك على البريد الإلكتروني المسجل مع تعليمات الدخول مجددًا.'
+        ], 200);
+    }
+
+    public function changePassword(ChangePasswordRequest $request, AuthService $authService)
+    {
+        // نمرر المستخدم الحالي (request()->user()) والبيانات من الـ Request
+        $authService->changePassword(
+            $request->user(),
+            $request->input('current_password'),
+            $request->input('new_password')
+        );
+
+        return response()->json([
+            'message' => 'تم تغيير كلمة المرور بنجاح.'
+        ], 200);
     }
 }

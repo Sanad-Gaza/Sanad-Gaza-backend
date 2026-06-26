@@ -6,8 +6,8 @@ use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\Auth\ChangePasswordRequest;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller

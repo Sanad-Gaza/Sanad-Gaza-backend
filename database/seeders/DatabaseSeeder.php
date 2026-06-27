@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([AdminUserSeeder::class]);
 
-    //     // create a default user for testing type Student
+
+        //     // create a default user for testing type Student
     for ($i = 1; $i <= 10; $i++) {
         User::updateOrCreate(
             [

@@ -58,8 +58,3 @@ class DatabaseSeeder extends Seeder
         );
     }
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> feature/educational-management

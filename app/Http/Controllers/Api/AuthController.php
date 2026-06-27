@@ -32,23 +32,19 @@ class AuthController extends Controller
     {
         if (!$request->user()) {
             return response()->json([
-                'message' => 'User not authenticated'
+                'message' => 'المستخدم غير مصرح له بتسجيل الخروج.'
             ], 401);
         }
         $request->user()->currentAccessToken()->delete();
         return response()->json([
-            'message' => 'Logout successful'
+            'message' => 'تم تسجيل الخروج بنجاح.'
         ]);
     }
 
 
     public function forgotPassword(ForgotPasswordRequest $request, AuthService $authService)
     {
-        $authService->forgotPassword($request->input('username'));
-
-        return response()->json([
-            'message' => 'تم استلام طلبك. سيتم التواصل معك على البريد الإلكتروني المسجل مع تعليمات الدخول مجددًا.'
-        ], 200);
+           return $authService->forgotPassword($request->username);
     }
 
     public function changePassword(ChangePasswordRequest $request, AuthService $authService)

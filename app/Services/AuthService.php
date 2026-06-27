@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
-
+use Throwable;
 
 class AuthService
 {
@@ -29,23 +29,43 @@ class AuthService
         ];
     }
 
-    public function forgotPassword(string $username): void
+    public function forgotPassword(string $username)
     {
-        DB::transaction(function () use ($username) {
-            $user = User::where('username', $username)->firstOrFail();
+        try {
+            // نضع الترانزاكشن بالكامل داخل الـ try
+            DB::transaction(function () use ($username) {
 
-            DB::table('password_resets')
-                ->where('username', $username)
-                ->where('status', 'pending')
-                ->delete();
+                // 1. إذا فشل هذا السطر، سيرمي خطأ من نوع ModelNotFoundException
+                $user = User::where('username', $username)->firstOrFail();
 
-            DB::table('password_resets')->insert([
-                'username' => $username,
-                'token'    => Str::random(60),
-                'status'   => 'pending',
-                'created_at' => now(),
-            ]);
-        });
+                DB::table('password_resets')
+                    ->where('username', $username)
+                    ->where('status', 'pending')
+                    ->delete();
+
+                DB::table('password_resets')->insert([
+                    'username'   => $username,
+                    'token'      => Str::random(60),
+                    'status'     => 'pending',
+                    'created_at' => now(),
+                ]);
+            });
+
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'تمت العملية بنجاح، وجاري معالجة طلبك.'
+            ], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'اسم المستخدم هذا غير مسجل لدينا في النظام!'
+            ], 404);
+        } catch (Throwable $e) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'حدث خطأ داخلي في السيرفر، يرجى المحاولة لاحقاً.',
+            ], 500);
+        }
     }
 
     public function changePassword(User $user, string $currentPassword, string $newPassword): void

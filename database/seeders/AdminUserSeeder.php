@@ -24,5 +24,23 @@ class AdminUserSeeder extends Seeder
                 'password' => Hash::make('Admin@12345'),
             ]
         );
+
+
+        for ($i = 1; $i <= 10; $i++) {
+            User::updateOrCreate(
+                [
+                    'username' => 'student' . $i,
+                ],
+                [
+                    'name' => 'ابراهيم ',
+                    'email' => 'student' . $i . '@sanad.com',
+                    'phone_number' => null,
+                    'role' => User::ROLE_STUDENT,
+                    'status' => User::STATUS_ACTIVE,
+                    'profile_picture' => null,
+                    'password' => Hash::make('123'),
+                ]
+            );
+        }
     }
 }

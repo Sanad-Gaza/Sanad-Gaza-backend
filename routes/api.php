@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\GradeController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SubjectController;
+use App\Http\Controllers\Api\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -27,4 +28,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/subjects/{id}', [SubjectController::class, 'update']);
     Route::delete('/subjects/{id}', [SubjectController::class, 'destroy']);
     Route::get('/subjects/{id}', [SubjectController::class, 'show']);
+
+    //Teacher routes
+    Route::post('/create-teacher', [TeacherController::class, 'store']);
+    Route::get('/teachers', [TeacherController::class, 'index']);
+    Route::get('/teachers/{id}', [TeacherController::class, 'show']);
+    Route::put('/teachers/{id}', [TeacherController::class, 'update']);
+    Route::delete('/teachers/{id}', [TeacherController::class, 'destroy']);
 });

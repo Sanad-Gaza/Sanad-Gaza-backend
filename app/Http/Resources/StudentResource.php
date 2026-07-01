@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class StudentResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id'             => $this->id,
+            'parent_phone'   => $this->parent_phone,
+            'gender'         => $this->gender,
+            'birth_date'     => $this->birth_date ? $this->birth_date->format('Y-m-d') : null,
+            'points_balance' => $this->points_balance,
+
+            'profile'        => new UserResource($this->whenLoaded('user')),
+            'grade'          => new GradeResource($this->whenLoaded('grade')),
+
+            'created_at'     => $this->created_at->toISOString(),
+        ];
+    }
+}

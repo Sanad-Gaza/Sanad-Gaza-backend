@@ -22,7 +22,11 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name',
+        'identity_number',
+        'first_name',
+        'father_name',
+        'grandfather_name',
+        'family_name',
         'username',
         'email',
         'phone_number',
@@ -70,4 +74,9 @@ class User extends Authenticatable
         return $this->hasOne(Teacher::class);
     }
 
+    // Getter for full name
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->father_name} {$this->grandfather_name} {$this->family_name}";
+    }
 }

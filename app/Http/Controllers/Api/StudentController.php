@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest; // استدعاء ملف التحقق للتحديث
 use App\Services\StudentService;
 use App\Http\Resources\StudentResource;
 
@@ -16,6 +17,7 @@ class StudentController extends Controller
         $this->studentService = $studentService;
     }
 
+    // 1. إنشاء طالب جديد
     public function store(StoreStudentRequest $request)
     {
         $student = $this->studentService->createStudent($request->validated());
@@ -26,9 +28,38 @@ class StudentController extends Controller
         ], 201);
     }
 
+    // 2. جلب قائمة الطلاب
     public function index()
     {
         $students = $this->studentService->getAllStudents();
         return StudentResource::collection($students);
+    }
+
+    // 3. عرض بيانات طالب محدد
+    public function show($id)
+    {
+        $student = $this->studentService->getStudentById($id);
+        return new StudentResource($student);
+    }
+
+    // 4. تحديث بيانات الطالب
+    public function update(UpdateStudentRequest $request, $id)
+    {
+        $student = $this->studentService->updateStudent($id, $request->validated());
+
+        return response()->json([
+            'message' => 'تم تحديث بيانات الطالب بنجاح',
+            'data'    => new StudentResource($student),
+        ], 200);
+    }
+
+    // 5. حذف حساب الطالب
+    public function destroy($id)
+    {
+        $this->studentService->deleteStudent($id);
+
+        return response()->json([
+            'message' => 'تم حذف حساب الطالب بنجاح',
+        ], 200);
     }
 }

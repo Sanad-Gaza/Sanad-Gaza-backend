@@ -26,7 +26,6 @@ return Application::configure(basePath: dirname(__DIR__))
                         'message' => 'المورد المطلوب غير موجود.'
                     ], 404);
                 }
-
             }
         });
     })->create();

@@ -9,15 +9,16 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+   protected $fillable = [
         'user_id',
         'grade_id',
+        'section',        
+        'health_status',
         'parent_phone',
         'gender',
         'birth_date',
         'points_balance',
     ];
-
     protected function casts(): array
     {
         return [

@@ -12,21 +12,32 @@ class TeacherService
     public function createTeacher(array $data): Teacher
     {
         return DB::transaction(function () use ($data) {
+
+            // 1. إنشاء حساب المستخدم مع الأسماء المفصلة ورقم الهوية
             $user = User::create([
-                'name'         => $data['name'],
-                'username'     => $data['username'],
-                'email'        => $data['email'],
-                'phone_number' => $data['phone_number'] ?? null,
-                'password'     => Hash::make($data['password']),
-                'role'         => 'teacher',
-                'status'       => $data['status'] ?? 'active',
+                'identity_number'  => $data['identity_number'],
+                'first_name'       => $data['first_name'],
+                'father_name'      => $data['father_name'],
+                'grandfather_name' => $data['grandfather_name'],
+                'family_name'      => $data['family_name'],
+                'username'         => $data['username'],
+                'email'            => $data['email'],
+                'phone_number'     => $data['phone_number'] ?? null,
+                'password'         => Hash::make($data['password']),
+                'role'             => User::ROLE_TEACHER,
+                'status'           => $data['status'] ?? User::STATUS_ACTIVE,
             ]);
 
+            // 2. إنشاء ملف المعلم مع الحقول الجديدة (الجنس، الميلاد، المؤهل)
             $teacher = Teacher::create([
-                'user_id'        => $user->id,
-                'subject_id'     => $data['subject_id'],
-                'specialization' => $data['specialization'] ?? null,
-                'bio'            => $data['bio'] ?? null,
+                'user_id'          => $user->id,
+                'subject_id'       => $data['subject_id'],
+                'gender'           => $data['gender'] ?? null,
+                'birth_date'       => $data['birth_date'] ?? null,
+                'qualification'    => $data['qualification'] ?? null,
+                'graduation_year'  => $data['graduation_year'] ?? null,
+                'specialization'   => $data['specialization'] ?? null,
+                'bio'              => $data['bio'] ?? null,
             ]);
 
             return $teacher->load(['user', 'subject']);
@@ -50,11 +61,15 @@ class TeacherService
             $user = $teacher->user;
 
             $userData = [
-                'name'         => $data['name'],
-                'username'     => $data['username'],
-                'email'        => $data['email'],
-                'phone_number' => $data['phone_number'] ?? $user->phone_number,
-                'status'       => $data['status'] ?? $user->status,
+                'identity_number'  => $data['identity_number'] ?? $user->identity_number,
+                'first_name'       => $data['first_name'] ?? $user->first_name,
+                'father_name'      => $data['father_name'] ?? $user->father_name,
+                'grandfather_name' => $data['grandfather_name'] ?? $user->grandfather_name,
+                'family_name'      => $data['family_name'] ?? $user->family_name,
+                'username'         => $data['username'] ?? $user->username,
+                'email'            => $data['email'] ?? $user->email,
+                'phone_number'     => $data['phone_number'] ?? $user->phone_number,
+                'status'           => $data['status'] ?? $user->status,
             ];
 
             if (!empty($data['password'])) {

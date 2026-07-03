@@ -14,24 +14,25 @@ return new class extends Migration
     Schema::create('students', function (Blueprint $table) {
         $table->id();
 
-        $table->foreignId('user_id')
-            ->unique()
-            ->constrained()
-            ->cascadeOnDelete();
+            $table->foreignId('user_id')
+                ->unique()
+                ->constrained()
+                ->cascadeOnDelete();
 
-        $table->foreignId('grade_id')
-            ->constrained()
-            ->restrictOnDelete();
+            $table->foreignId('grade_id')
+                ->constrained()
+                ->restrictOnDelete();
 
-        $table->string('parent_phone')->nullable();
+            // الحقول الجديدة بناءً على التصميم
+            $table->string('section')->nullable();   
+            $table->string('health_status')->nullable();
 
-        $table->enum('gender', ['male', 'female'])->nullable();
+            $table->string('parent_phone')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->date('birth_date')->nullable();
+            $table->unsignedInteger('points_balance')->default(0);
 
-        $table->date('birth_date')->nullable();
-
-        $table->unsignedInteger('points_balance')->default(0);
-
-        $table->timestamps();
+            $table->timestamps();
     });
 }
 

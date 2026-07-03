@@ -23,6 +23,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/grades/{id}', [GradeController::class, 'destroy']);
     Route::get('/grades/{id}', [GradeController::class, 'show']);
 
+
+    //Student routes
+    Route::post('/create-student', [StudentController::class, 'store']);
+    Route::get('/students', [StudentController::class, 'index']);
+    Route::get('/students/{id}', [StudentController::class, 'show']);
+    Route::put('/students/{id}', [StudentController::class, 'update']);
+    Route::delete('/students/{id}', [StudentController::class, 'destroy']);
     //Subject routes
     Route::post('/create-subject', [SubjectController::class, 'store']);
     Route::get('/subjects', [SubjectController::class, 'index']);
@@ -37,10 +44,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/teachers/{id}', [TeacherController::class, 'update']);
     Route::delete('/teachers/{id}', [TeacherController::class, 'destroy']);
 
-    //Student routes
-    Route::post('/create-student', [StudentController::class, 'store']);
-    Route::get('/students', [StudentController::class, 'index']);
-    Route::get('/students/{id}', [StudentController::class, 'show']);
-    Route::put('/students/{id}', [StudentController::class, 'update']);
-    Route::delete('/students/{id}', [StudentController::class, 'destroy']);
+
 });

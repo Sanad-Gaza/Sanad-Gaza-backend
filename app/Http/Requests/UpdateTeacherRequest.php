@@ -26,7 +26,7 @@ class UpdateTeacherRequest extends FormRequest
             'email'          => ['required', 'email', Rule::unique('users', 'email')->ignore($teacher->user_id)],
             // الباسوورد nullable لأنه قد لا يرغب بتغييره عند تحديث بياناته
             'password'       => ['nullable', 'string', 'min:8'],
-            'phone_number'   => ['nullable', 'string', Rule::unique('users', 'phone_number')->ignore($teacher->user_id)],
+            'phone_number'   => ['nullable', 'string'],
             'status'         => ['nullable', 'in:active,inactive'],
             'subject_id'     => ['required', 'integer', 'exists:subjects,id'],
             'specialization' => ['nullable', 'string', 'max:255'],

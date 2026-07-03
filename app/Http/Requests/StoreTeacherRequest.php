@@ -23,7 +23,7 @@ class StoreTeacherRequest extends FormRequest
             'username'         => ['required', 'string', 'unique:users,username'],
             'email'            => ['required', 'email', 'unique:users,email'],
             'password'         => ['required', 'string', 'min:8'],
-            'phone_number'     => ['nullable', 'string', 'unique:users,phone_number'],
+            'phone_number'     => ['nullable', 'string'],
             'status'           => ['nullable', 'in:active,inactive'],
 
             // بيانات المعلم الإضافية

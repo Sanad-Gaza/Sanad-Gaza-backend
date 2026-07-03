@@ -15,7 +15,7 @@ class StoreStudentRequest extends FormRequest
     {
         return [
             // بيانات الحساب الأساسي (جدول users)
-            'identity_number'  => ['required', 'string', 'unique:users,identity_number'],
+            'identity_number'  => ['required', 'string','unique:users,identity_number'],
             'first_name'       => ['required', 'string', 'max:255'],
             'father_name'      => ['required', 'string', 'max:255'],
             'grandfather_name' => ['required', 'string', 'max:255'],
@@ -23,7 +23,7 @@ class StoreStudentRequest extends FormRequest
             'username'         => ['required', 'string', 'unique:users,username'],
             'email'            => ['nullable', 'email', 'unique:users,email'],
             'password'         => ['required', 'string', 'min:8'],
-            'phone_number'     => ['nullable', 'string', 'unique:users,phone_number'],
+            'phone_number'     => ['nullable', 'string',],
             'status'           => ['nullable', 'in:active,inactive'],
 
             // بيانات الطالب الإضافية (جدول students)

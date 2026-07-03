@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('family_name');               // اسم العائلة
 
             $table->string('username')->unique();
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
             $table->string('phone_number')->nullable()->unique();
             $table->enum('role', ['student', 'teacher', 'admin']);
             $table->enum('status', ['active', 'inactive'])->default('active');

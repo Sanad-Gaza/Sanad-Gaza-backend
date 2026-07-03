@@ -11,10 +11,10 @@ class StudentResource extends JsonResource
     {
         return [
             'id'             => $this->id,
-            'parent_phone'   => $this->parent_phone,
             'gender'         => $this->gender,
             'birth_date'     => $this->birth_date ? $this->birth_date->format('Y-m-d') : null,
             'points_balance' => $this->points_balance,
+            
 
             'profile'        => new UserResource($this->whenLoaded('user')),
             'grade'          => new GradeResource($this->whenLoaded('grade')),

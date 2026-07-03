@@ -24,10 +24,9 @@ return new class extends Migration
                 ->restrictOnDelete();
 
             // الحقول الجديدة بناءً على التصميم
-            $table->string('section')->nullable();   
+            $table->string('section')->nullable();
             $table->string('health_status')->nullable();
 
-            $table->string('parent_phone')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->date('birth_date')->nullable();
             $table->unsignedInteger('points_balance')->default(0);

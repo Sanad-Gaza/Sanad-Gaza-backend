@@ -20,7 +20,6 @@ class UpdateStudentRequest extends FormRequest
         $student = Student::findOrFail($studentId);
 
         return [
-            // نستثني الـ user_id الخاص بالطالب من فحص التكرار
             'identity_number'  => ['required', 'string', Rule::unique('users', 'identity_number')->ignore($student->user_id)],
             'first_name'       => ['required', 'string', 'max:255'],
             'father_name'      => ['required', 'string', 'max:255'],
@@ -31,7 +30,7 @@ class UpdateStudentRequest extends FormRequest
 
             // الباسوورد اختياري عند التحديث
             'password'         => ['nullable', 'string', 'min:8'],
-            'phone_number'     => ['nullable', 'string', Rule::unique('users', 'phone_number')->ignore($student->user_id)],
+            'phone_number'     => ['nullable', 'string'],
             'status'           => ['nullable', 'in:active,inactive'],
 
             // بيانات الطالب

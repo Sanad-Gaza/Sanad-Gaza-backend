@@ -67,7 +67,7 @@ class TeacherService
                 'grandfather_name' => $data['grandfather_name'] ?? $user->grandfather_name,
                 'family_name'      => $data['family_name'] ?? $user->family_name,
                 'username'         => $data['username'] ?? $user->username,
-                'email'            => $data['email'] ?? $user->email,
+                'email'            => $data['email'] ?? null,
                 'phone_number'     => $data['phone_number'] ?? $user->phone_number,
                 'status'           => $data['status'] ?? $user->status,
             ];

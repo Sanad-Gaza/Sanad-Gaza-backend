@@ -22,6 +22,7 @@ class StudentService
                 'grandfather_name' => $data['grandfather_name'],
                 'family_name'      => $data['family_name'],
                 'username'         => $data['username'],
+                'email'            => $data['email'] ?? null,
                 'phone_number'     => $data['phone_number'] ?? null,
                 'password'         => Hash::make($data['password']),
                 'role'             => User::ROLE_STUDENT,

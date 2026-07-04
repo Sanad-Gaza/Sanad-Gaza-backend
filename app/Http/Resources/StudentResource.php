@@ -12,7 +12,7 @@ class StudentResource extends JsonResource
         return [
             'id'             => $this->id,
             'gender'         => $this->gender,
-            'birth_date'     => $this->birth_date ? $this->birth_date->format('Y-m-d') : null,
+            'birth_date'     => $this->birth_date ?? null,
             'points_balance' => $this->points_balance,
             'points_earned'  => $this->points_earned,
             'health_status'  => $this->health_status,

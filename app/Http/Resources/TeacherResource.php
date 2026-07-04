@@ -21,11 +21,11 @@ class TeacherResource extends JsonResource
             'bio'            => $this->bio,
             'qualification'    => $this->qualification,
             'gender'         => $this->gender,
-            'birth_date'     => $this->birth_date ? $this->birth_date->format('Y-m-d') : null,
+            'birth_date'     => $this->birth_date ?? null,
             'graduation_year'  => $this->graduation_year,
 
 
-             //  UserResource
+            //  UserResource
             'profile'        => new UserResource($this->whenLoaded('user')),
             //   SubjectResource
             'subject'        => new SubjectResource($this->whenLoaded('subject')),

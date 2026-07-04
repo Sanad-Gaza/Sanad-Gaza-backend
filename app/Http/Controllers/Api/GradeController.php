@@ -7,6 +7,7 @@ use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
 use App\Services\GradeService;
 use App\Http\Resources\GradeResource;
+use App\Http\Resources\SubjectResource;
 
 class GradeController extends Controller
 {
@@ -52,5 +53,13 @@ class GradeController extends Controller
         return response()->json([
             'message' => 'تم حذف الصف بنجاح',
         ], 200);
+    }
+
+    // Get subjects by grade id
+    public function getSubjectsByGradeId($id, GradeService $gradeService)
+    {
+        $subjects = $gradeService->getSubjectsByGradeId($id);
+
+        return SubjectResource::collection($subjects);
     }
 }

@@ -46,4 +46,9 @@ class GradeService
         $grade = Grade::findOrFail($id);
         $grade->delete();
     }
+
+    public function getSubjectsByGradeId($id)
+    {
+        return Grade::findOrFail($id)->subjects()->get();
+    }
 }

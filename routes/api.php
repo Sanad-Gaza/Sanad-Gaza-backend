@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/grades/{id}', [GradeController::class, 'update']);
     Route::delete('/grades/{id}', [GradeController::class, 'destroy']);
     Route::get('/grades/{id}', [GradeController::class, 'show']);
+    Route::get('/grades/{id}/subjects', [GradeController::class, 'getSubjectsByGradeId']);
 
 
     //Student routes
@@ -43,6 +44,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/teachers/{id}', [TeacherController::class, 'show']);
     Route::put('/teachers/{id}', [TeacherController::class, 'update']);
     Route::delete('/teachers/{id}', [TeacherController::class, 'destroy']);
-
-
 });

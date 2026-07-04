@@ -21,10 +21,11 @@ class StoreTeacherRequest extends FormRequest
             'grandfather_name' => ['required', 'string', 'max:255'],
             'family_name'      => ['required', 'string', 'max:255'],
             'username'         => ['required', 'string', 'unique:users,username'],
-            'email'            => ['required', 'email', 'unique:users,email'],
+            'email'            => ['nullable', 'email', 'unique:users,email'],
             'password'         => ['required', 'string', 'min:8'],
             'phone_number'     => ['nullable', 'string'],
             'status'           => ['nullable', 'in:active,inactive'],
+            
 
             // بيانات المعلم الإضافية
             'subject_id'       => ['required', 'integer', 'exists:subjects,id'],

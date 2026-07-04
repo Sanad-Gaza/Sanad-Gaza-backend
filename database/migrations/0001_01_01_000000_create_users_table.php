@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->string('username')->unique();
             $table->string('email')->nullable()->unique();
-            $table->string('phone_number')->nullable()->unique();
+            $table->string('phone_number')->nullable();
             $table->enum('role', ['student', 'teacher', 'admin']);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('profile_picture')->nullable();

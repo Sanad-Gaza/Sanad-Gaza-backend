@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\TeacherController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\StudentDashboardController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
@@ -31,6 +32,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/students/{id}', [StudentController::class, 'show']);
     Route::put('/students/{id}', [StudentController::class, 'update']);
     Route::delete('/students/{id}', [StudentController::class, 'destroy']);
+    //Student dashboard route
+    Route::get('/student/dashboard', [StudentDashboardController::class, 'index']);
+
+
+    //مسار لوحة تحكم الطالب
     //Subject routes
     Route::post('/create-subject', [SubjectController::class, 'store']);
     Route::get('/subjects', [SubjectController::class, 'index']);

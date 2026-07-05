@@ -35,4 +35,9 @@ class Student extends Model
     {
         return $this->belongsTo(Grade::class);
     }
+
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'student_task')->withPivot('status')->withTimestamps();
+    }
 }

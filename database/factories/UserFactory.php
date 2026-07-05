@@ -24,12 +24,22 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
-            'name' => fake()->name(),
+            'identity_number' => fake()->unique()->numerify('###########'), // رقم الهوية المكون من 11 رقمًا
+            'first_name' => fake()->firstName(),
+            'father_name' => fake()->firstName(),
+            'grandfather_name' => fake()->firstName(),
+            'family_name' => fake()->lastName(),
+            'username' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'phone_number' => fake()->unique()->numerify('05########'), // رقم الهاتف
+            'role' => fake()->randomElement(['student', 'teacher', 'admin']),
+            'status' => 'active', // الحالة الافتراضية للمستخدم
+            'profile_picture' => null, // صورة الملف الشخصي الافتراضية
+            'email_verified_at' => now(), // التحقق من البريد الإلكتروني بشكل افتراضي
+            'password' => static::$password ??= Hash::make('password'), // كلمة المرور الافتراضية
+            'remember_token' => Str::random(10), // رمز التذكر العشوائي
         ];
     }
 

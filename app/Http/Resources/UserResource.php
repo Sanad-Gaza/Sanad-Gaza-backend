@@ -35,6 +35,7 @@ class UserResource extends JsonResource
             'status'           => $this->status,
             'profile_picture'  => $this->profile_picture,
             'created_at'       => $this->created_at->toISOString(),
+            
         ];
     }
 

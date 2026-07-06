@@ -21,4 +21,11 @@ class Unit extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'student_unit')
+                    ->withPivot('status', 'stars')
+                    ->withTimestamps();
+    }
 }

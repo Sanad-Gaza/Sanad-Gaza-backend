@@ -9,7 +9,7 @@ class Student extends Model
 {
     use HasFactory;
 
-   protected $fillable = [
+    protected $fillable = [
         'user_id',
         'grade_id',
         'section',
@@ -39,5 +39,12 @@ class Student extends Model
     public function tasks()
     {
         return $this->belongsToMany(Task::class, 'student_task')->withPivot('status')->withTimestamps();
+    }
+
+    public function units()
+    {
+        return $this->belongsToMany(Unit::class, 'student_unit')
+            ->withPivot('status', 'stars')
+            ->withTimestamps();
     }
 }

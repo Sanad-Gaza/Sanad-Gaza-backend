@@ -58,4 +58,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // مسار إنجاز المهمة وإضافة النقاط (سنقوم ببرمجة الدالة الخاصة به الآن)
     Route::post('/tasks/{task_id}/complete', [SubjectContentController::class, 'completeTask']);
+
+
+
+    Route::get('/subjects/{subject_id}/map', [SubjectContentController::class, 'getSubjectMap']);
 });

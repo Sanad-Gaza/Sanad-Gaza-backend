@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('student_task', function (Blueprint $table) {
-        $table->id();
+        Schema::create('student_task', function (Blueprint $table) {
+            $table->id();
 
-        $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
+            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
+            $table->foreignId('task_id')->constrained('tasks')->cascadeOnDelete();
 
-        $table->foreignId('task_id')->constrained('tasks')->cascadeOnDelete();
+            $table->enum('status', ['pending', 'completed'])->default('pending');
 
-        $table->enum('status', ['pending', 'completed'])->default('pending');
+            // إضافة حقل لتتبع متى أتم الطالب هذه المهمة وحصل على النقاط
+            $table->timestamp('completed_at')->nullable();
 
-        $table->timestamps();
-    });
+            $table->timestamps();
+        });
     }
 
     /**

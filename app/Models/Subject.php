@@ -33,4 +33,9 @@ class Subject extends Model
     {
         return $this->hasMany(Teacher::class);
     }
+
+    public function units()
+    {
+        return $this->hasMany(Unit::class);
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\TeacherController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StudentDashboardController;
+use App\Http\Controllers\Api\SubjectContentController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
@@ -50,4 +51,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/teachers/{id}', [TeacherController::class, 'show']);
     Route::put('/teachers/{id}', [TeacherController::class, 'update']);
     Route::delete('/teachers/{id}', [TeacherController::class, 'destroy']);
+
+
+    // مسار جلب محتوى المادة (الوحدات والمهام)
+    Route::get('/subjects/{subject_id}/content', [SubjectContentController::class, 'getContent']);
+
+    // مسار إنجاز المهمة وإضافة النقاط (سنقوم ببرمجة الدالة الخاصة به الآن)
+    Route::post('/tasks/{task_id}/complete', [SubjectContentController::class, 'completeTask']);
 });

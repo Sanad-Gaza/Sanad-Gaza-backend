@@ -11,7 +11,6 @@ class StudentSeeder extends Seeder
 {
     public function run(): void
     {
-        // تجهيز الصف الأول للتأكد من ربط الطلاب به
         $grade = Grade::firstOrCreate([
             'name'        => 'الصف الأول',
             'level'       => 1,
@@ -19,7 +18,6 @@ class StudentSeeder extends Seeder
             'status'      => 'active'
         ]);
 
-        // مصفوفة ثابتة للطلاب الـ 20 بجميع تفاصيلهم ونقاطهم
         $students = [
             ['id_num' => '800000001', 'first' => 'ضياء', 'father' => 'أكثم', 'grand' => 'أنس', 'family' => 'الشهري', 'gender' => 'female', 'points' => 802],
             ['id_num' => '800000002', 'first' => 'عبدالرؤوف', 'father' => 'وائل', 'grand' => 'احمد', 'family' => 'السهلي', 'gender' => 'male', 'points' => 695],
@@ -43,7 +41,6 @@ class StudentSeeder extends Seeder
             ['id_num' => '800000020', 'first' => 'أمل', 'father' => 'مهدي', 'grand' => 'صهيب', 'family' => 'الصقير', 'gender' => 'female', 'points' => 701],
         ];
 
-        // رقم العداد لتسلسل الإيميلات واسم المستخدم
         $i = 1;
 
         foreach ($students as $s) {
@@ -57,10 +54,12 @@ class StudentSeeder extends Seeder
                     'family_name'      => $s['family'],
                     'username'         => "student{$i}",
                     'role'             => 'student',
-                    'phone_number'     => $s['id_num'], // رقم الهاتف مؤقتًا نفس رقم الهوية
                     'password'         => bcrypt('password'),
                 ]
             );
+
+            // تحديد الشعبة برمجياً: أول 10 طلاب في شعبة "أ"، والباقي في "ب"
+            $sectionName = ($i <= 10) ? 'أ' : 'ب';
 
             Student::firstOrCreate(
                 ['user_id' => $user->id],
@@ -68,12 +67,13 @@ class StudentSeeder extends Seeder
                     'grade_id'       => $grade->id,
                     'gender'         => $s['gender'],
                     'points_balance' => $s['points'],
+                    'section'        => $sectionName, // تم ربط الشعبة هنا!
                 ]
             );
 
             $i++;
         }
 
-        $this->command->info('تم تثبيت بيانات الـ 20 طالب بنقاطهم المخصصة بنجاح! 🏆');
+        $this->command->info('تم تثبيت بيانات 20 طالباً وتوزيعهم على الشعبتين (أ) و (ب) بنجاح! 🏆');
     }
 }

@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Grade;
-use App\Models\User;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,7 +23,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call([SubjectSeeder::class]);
 
+        $this->call([TeacherSeeder::class]);
+
         $this->call([StudentSeeder::class]);
 
+        $this->call([SubjectContentSeeder::class]);
+
+        $this->call([LanguagesContentSeeder::class]);
     }
 }

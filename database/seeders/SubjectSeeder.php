@@ -17,7 +17,6 @@ class SubjectSeeder extends Seeder
      */
     public function run(): void
     {
-        //All الصف الأول Subjects(ط'رياضيات', 'اللغة العربية', 'اللغة الإنجليزية', 'علوم', 'تربية إسلامية', 'تربية فنية', 'تربية بدنيةو)
         Subject::Create(['grade_id' => 1, 'name' => 'اللغة العربية', 'description' => 'اللغة العربية للصف الأول', 'status' => 'active']);
         Subject::Create(['grade_id' => 1, 'name' => 'اللغة الإنجليزية', 'description' => 'اللغة الإنجليزية للصف الأول', 'status' => 'active']);
         Subject::Create(['grade_id' => 1, 'name' => 'علوم', 'description' => 'علوم للصف الأول', 'status' => 'active']);

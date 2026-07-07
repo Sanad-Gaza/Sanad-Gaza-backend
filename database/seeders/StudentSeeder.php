@@ -54,6 +54,7 @@ class StudentSeeder extends Seeder
                     'family_name'      => $s['family'],
                     'username'         => "student{$i}",
                     'role'             => 'student',
+                    'phone_number'     => $s['id_num'], // رقم الهاتف مؤقتًا نفس رقم الهوية
                     'password'         => bcrypt('password'),
                 ]
             );

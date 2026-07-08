@@ -13,7 +13,6 @@ class TeacherService
     {
         return DB::transaction(function () use ($data) {
 
-            // 1. إنشاء حساب المستخدم مع الأسماء المفصلة ورقم الهوية
             $user = User::create([
                 'identity_number'  => $data['identity_number'],
                 'first_name'       => $data['first_name'],
@@ -28,7 +27,6 @@ class TeacherService
                 'status'           => $data['status'] ?? User::STATUS_ACTIVE,
             ]);
 
-            // 2. إنشاء ملف المعلم مع الحقول الجديدة (الجنس، الميلاد، المؤهل)
             $teacher = Teacher::create([
                 'user_id'          => $user->id,
                 'subject_id'       => $data['subject_id'],

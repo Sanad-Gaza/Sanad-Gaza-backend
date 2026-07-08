@@ -19,7 +19,6 @@ return new class extends Migration
 
             $table->enum('status', ['pending', 'completed'])->default('pending');
 
-            // إضافة حقل لتتبع متى أتم الطالب هذه المهمة وحصل على النقاط
             $table->timestamp('completed_at')->nullable();
 
             $table->timestamps();

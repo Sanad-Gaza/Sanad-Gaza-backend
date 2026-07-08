@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
 
-        // ربط الوحدة بالمادة الدراسية
         $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
-        $table->string('title'); // مثلاً: "الوحدة الأولى"
+        $table->string('title');
 
         $table->timestamps();
         });

@@ -20,7 +20,6 @@ class StudentDashboardController extends Controller
             return response()->json(['message' => 'بيانات الطالب غير متوفرة'], 404);
         }
 
-        // 2. حساب ترتيب الطالب (نشطين فقط)
         $StudentsTopThanMe = Student::where('grade_id', $student->grade_id)
             ->whereHas('user', function ($query) {
                 $query->where('status', 'active');
@@ -30,7 +29,6 @@ class StudentDashboardController extends Controller
 
         $rank = $StudentsTopThanMe + 1;
 
-        // 3. جلب أفضل 3 طلاب في نفس الصف (نشطين)
         $leaderboard = Student::with('user')
             ->where('grade_id', $student->grade_id)
             ->whereHas('user', function ($query) {
@@ -40,7 +38,6 @@ class StudentDashboardController extends Controller
             ->take(3)
             ->get();
 
-        // 4. تحديث الشعلة (Daily Streak)
         $lastActivity = $student->last_activity_date ? \Carbon\Carbon::parse($student->last_activity_date) : null;
 
         if (is_null($lastActivity) || (!$lastActivity->isToday() && !$lastActivity->isYesterday())) {
@@ -52,11 +49,9 @@ class StudentDashboardController extends Controller
         $student->last_activity_date = \Carbon\Carbon::now();
         $student->save();
 
-        // 5. إحصائيات المهام
         $completedTasksCount = $student->tasks()->wherePivot('status', 'completed')->count();
         $pendingTasksCount = $student->tasks()->wherePivot('status', 'pending')->count();
 
-        // 6. جلب دروس اليوم (حسب صف الطالب وتاريخ اليوم)
         $todayLessons = Lesson::where('grade_id', $student->grade_id)
             ->whereDate('scheduled_date', Carbon::today())
             ->get();

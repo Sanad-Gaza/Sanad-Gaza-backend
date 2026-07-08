@@ -25,7 +25,7 @@ class StoreTeacherRequest extends FormRequest
             'password'         => ['required', 'string', 'min:8'],
             'phone_number'     => ['nullable', 'string'],
             'status'           => ['nullable', 'in:active,inactive'],
-            
+
 
             // بيانات المعلم الإضافية
             'subject_id'       => ['required', 'integer', 'exists:subjects,id'],

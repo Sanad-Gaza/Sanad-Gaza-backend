@@ -49,7 +49,6 @@ class AuthController extends Controller
 
     public function changePassword(ChangePasswordRequest $request, AuthService $authService)
     {
-        // نمرر المستخدم الحالي (request()->user()) والبيانات من الـ Request
         $authService->changePassword(
             $request->user(),
             $request->input('current_password'),

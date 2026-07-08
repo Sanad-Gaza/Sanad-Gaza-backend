@@ -23,7 +23,6 @@ return new class extends Migration
                 ->constrained()
                 ->restrictOnDelete();
 
-            // الحقول الجديدة بناءً على التصميم
             $table->string('section')->nullable();
             $table->string('health_status')->nullable();
 

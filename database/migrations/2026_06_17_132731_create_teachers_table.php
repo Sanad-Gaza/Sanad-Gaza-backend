@@ -24,10 +24,10 @@ return new class extends Migration
                 ->constrained()
                 ->nullOnDelete();
 
-            $table->enum('gender', ['male', 'female'])->nullable(); // الجنس
-            $table->date('birth_date')->nullable();                 // تاريخ الميلاد
-            $table->string('qualification')->nullable();            // المؤهل العلمي
-            $table->string('graduation_year', 4)->nullable();       // سنة التخرج
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('qualification')->nullable();
+            $table->string('graduation_year', 4)->nullable();       
 
             $table->string('specialization')->nullable();
             $table->text('bio')->nullable();

@@ -15,7 +15,6 @@ class UpdateStudentRequest extends FormRequest
 
     public function rules(): array
     {
-        // استخراج ID الطالب من الرابط
         $studentId = $this->route('id');
         $student = Student::findOrFail($studentId);
 
@@ -28,12 +27,10 @@ class UpdateStudentRequest extends FormRequest
             'username'         => ['required', 'string', Rule::unique('users', 'username')->ignore($student->user_id)],
             'email'            => ['required', 'email', Rule::unique('users', 'email')->ignore($student->user_id)],
 
-            // الباسوورد اختياري عند التحديث
             'password'         => ['nullable', 'string', 'min:8'],
             'phone_number'     => ['nullable', 'string'],
             'status'           => ['nullable', 'in:active,inactive'],
 
-            // بيانات الطالب
             'grade_id'         => ['required', 'integer', 'exists:grades,id'],
             'section'          => ['nullable', 'string', 'max:255'],
             'health_status'    => ['nullable', 'string', 'max:255'],

@@ -32,10 +32,8 @@ class AuthService
     public function forgotPassword(string $username)
     {
         try {
-            // نضع الترانزاكشن بالكامل داخل الـ try
             DB::transaction(function () use ($username) {
 
-                // 1. إذا فشل هذا السطر، سيرمي خطأ من نوع ModelNotFoundException
                 $user = User::where('username', $username)->firstOrFail();
 
                 DB::table('password_resets')

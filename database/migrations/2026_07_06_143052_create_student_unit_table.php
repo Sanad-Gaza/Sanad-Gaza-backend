@@ -14,19 +14,15 @@ return new class extends Migration
         Schema::create('student_unit', function (Blueprint $table) {
             $table->id();
 
-            // ربط الطالب بالوحدة (المستوى)
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
             $table->foreignId('unit_id')->constrained()->onDelete('cascade');
 
-            // حالة المستوى (مقفل، متاح، أو منجز)
             $table->enum('status', ['locked', 'unlocked', 'completed'])->default('locked');
 
-            // عدد النجوم (من 0 إلى 3)
             $table->tinyInteger('stars')->default(0);
 
             $table->timestamps();
 
-            // منع تكرار نفس الوحدة لنفس الطالب
             $table->unique(['student_id', 'unit_id']);
         });
     }

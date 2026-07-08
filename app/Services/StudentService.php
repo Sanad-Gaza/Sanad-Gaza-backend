@@ -14,7 +14,6 @@ class StudentService
     {
         return DB::transaction(function () use ($data) {
 
-            // 1. إنشاء حساب المستخدم
             $user = User::create([
                 'identity_number'  => $data['identity_number'],
                 'first_name'       => $data['first_name'],
@@ -29,7 +28,6 @@ class StudentService
                 'status'           => $data['status'] ?? User::STATUS_ACTIVE,
             ]);
 
-            // 2. إنشاء ملف الطالب وربطه بالمستخدم والصف الدراسي
             $student = Student::create([
                 'user_id'       => $user->id,
                 'grade_id'      => $data['grade_id'],
@@ -43,7 +41,6 @@ class StudentService
         });
     }
 
-    // جلب قائمة الطلاب
     public function getAllStudents()
     {
         return Student::with(['user', 'grade'])->get();
@@ -62,7 +59,6 @@ class StudentService
             $student = Student::findOrFail($id);
             $user = $student->user;
 
-            // 1. تجهيز بيانات المستخدم وتحديثها
             $userData = [
                 'identity_number'  => $data['identity_number'],
                 'first_name'       => $data['first_name'],
@@ -74,7 +70,6 @@ class StudentService
                 'status'           => $data['status'] ?? $user->status,
             ];
 
-            // تحديث كلمة المرور فقط إذا تم إرسالها
             if (!empty($data['password'])) {
                 $userData['password'] = Hash::make($data['password']);
             }
@@ -84,7 +79,6 @@ class StudentService
 
             $user->update($userData);
 
-            // 2. تحديث بيانات الطالب
             $student->update([
                 'grade_id'      => $data['grade_id'],
                 'section'       => $data['section'] ?? $student->section,
@@ -103,8 +97,6 @@ class StudentService
     {
         return DB::transaction(function () use ($id) {
             $student = Student::findOrFail($id);
-            // بما أننا استخدمنا cascadeOnDelete في الـ migration،
-            // حذف المستخدم سيؤدي تلقائياً لحذف الطالب المرتبط به.
             $student->user->delete();
             return true;
         });

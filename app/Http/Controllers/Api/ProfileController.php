@@ -14,14 +14,14 @@ class ProfileController extends Controller
     {
         if ($request->user()->role === 'student') {
             $student = $request->user()->student
-                ->load('user', 'grade'); // تحميل العلاقات المطلوبة
+                ->load('user', 'grade');
             return response()->json([
                 'student' => new StudentResource($student),
 
             ]);
         } elseif ($request->user()->role === 'teacher') {
             $teacher = $request->user()->teacher
-                ->load('user'); // تحميل العلاقات المطلوبة
+                ->load('user'); 
             return response()->json([
                 'teacher' => new TeacherResource($teacher),
             ]);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdminDashboardController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\GradeController;
 use App\Http\Controllers\Api\ProfileController;
@@ -29,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/grades/{id}', [GradeController::class, 'destroy']);
         Route::get('/grades/{id}', [GradeController::class, 'show']);
         Route::get('/grades/{id}/subjects', [GradeController::class, 'getSubjectsByGradeId']);
+        Route::get('/admin/dashboard', [AdminDashboardController::class, 'index']);
 
         // إدارة الطلاب
         Route::post('/create-student', [StudentController::class, 'store']);
@@ -60,6 +62,5 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/tasks/{task_id}/complete', [SubjectContentController::class, 'completeTask']);
     });
 
-    Route::middleware('role:teacher')->group(function () {
-    });
+    Route::middleware('role:teacher')->group(function () {});
 });

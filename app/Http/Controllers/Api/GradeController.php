@@ -8,12 +8,15 @@ use App\Http\Requests\UpdateGradeRequest;
 use App\Services\GradeService;
 use App\Http\Resources\GradeResource;
 use App\Http\Resources\SubjectResource;
+use App\Services\ActivityLogger;
 
 class GradeController extends Controller
 {
     public function store(StoreGradeRequest $request, GradeService $gradeService)
     {
         $grade = $gradeService->createGrade($request->validated());
+
+        ActivityLogger::log('إضافة صف', 'تم إضافة صف جديد: ' . $grade->name, 'نجاح');
 
         return response()->json([
             'message' => 'تم إنشاء الصف بنجاح',

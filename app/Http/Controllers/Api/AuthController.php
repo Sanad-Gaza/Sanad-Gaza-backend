@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
+use App\Services\ActivityLogger;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -19,6 +21,7 @@ class AuthController extends Controller
             $request->username,
             $request->password
         );
+
 
         return response()->json([
             'message' => 'Login successful',
@@ -44,8 +47,12 @@ class AuthController extends Controller
 
     public function forgotPassword(ForgotPasswordRequest $request, AuthService $authService)
     {
-           return $authService->forgotPassword($request->username);
+        $response = $authService->forgotPassword($request->username);
+        return $response;
     }
+
+
+
 
     public function changePassword(ChangePasswordRequest $request, AuthService $authService)
     {
@@ -54,6 +61,7 @@ class AuthController extends Controller
             $request->input('current_password'),
             $request->input('new_password')
         );
+
 
         return response()->json([
             'message' => 'تم تغيير كلمة المرور بنجاح.'

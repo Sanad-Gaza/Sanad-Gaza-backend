@@ -23,6 +23,8 @@ class AuthService
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+
+
         return [
             'user' => $user,
             'token' => $token,
@@ -48,7 +50,7 @@ class AuthService
                     'created_at' => now(),
                 ]);
             });
-
+                
             return response()->json([
                 'status'  => 'success',
                 'message' => 'تمت العملية بنجاح، وجاري معالجة طلبك.'

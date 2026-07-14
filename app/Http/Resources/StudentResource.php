@@ -20,6 +20,8 @@ class StudentResource extends JsonResource
 
             'profile'        => new UserResource($this->whenLoaded('user')),
             'grade'          => new GradeResource($this->whenLoaded('grade')),
+            //only Student Grade Subjects will be returned, not all subjects
+            'subjects'       => SubjectResource::collection($this->whenLoaded('grade')->subjects()->get()),
 
             'created_at'     => $this->created_at->toISOString(),
         ];

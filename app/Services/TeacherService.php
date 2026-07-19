@@ -42,9 +42,9 @@ class TeacherService
         });
     }
 
-    public function getAllTeachers()
+    public function getAllTeachers($perPage = 15)
     {
-        return Teacher::with(['user', 'subject'])->get();
+        return Teacher::with(['user', 'subject'])->paginate($perPage);
     }
 
     public function getTeacherById($id)

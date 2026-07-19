@@ -41,9 +41,9 @@ class StudentService
         });
     }
 
-    public function getAllStudents()
+   public function getAllStudents($perPage = 15)
     {
-        return Student::with(['user', 'grade'])->get();
+        return Student::with(['user', 'grade'])->paginate($perPage);
     }
 
 
@@ -100,13 +100,5 @@ class StudentService
             $student->user->delete();
             return true;
         });
-    }
-
-    //Student Full Name
-    public function getStudentFullName($id)
-    {
-        $student = Student::with('user')->findOrFail($id);
-        $user = $student->user;
-        return "{$user->first_name} {$user->father_name} {$user->grandfather_name} {$user->family_name}";
     }
 }

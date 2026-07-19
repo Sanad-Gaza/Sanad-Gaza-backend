@@ -3,70 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Lesson;
-use App\Models\Student;
-use Carbon\Carbon;
+use App\Services\StudentDashboardService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class StudentDashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request, StudentDashboardService $dashboardService)
     {
-        $user = Auth::user();
-        $student = $user->student;
+        $data = $dashboardService->getDashboardData($request->user());
 
-        if (!$student) {
-            return response()->json(['message' => 'بيانات الطالب غير متوفرة'], 404);
-        }
-
-        $StudentsTopThanMe = Student::where('grade_id', $student->grade_id)
-            ->whereHas('user', function ($query) {
-                $query->where('status', 'active');
-            })
-            ->where('points_balance', '>', $student->points_balance)
-            ->count();
-
-        $rank = $StudentsTopThanMe + 1;
-
-        $leaderboard = Student::with('user')
-            ->where('grade_id', $student->grade_id)
-            ->whereHas('user', function ($query) {
-                $query->where('status', 'active');
-            })
-            ->orderBy('points_balance', 'desc')
-            ->take(3)
-            ->get();
-
-        $lastActivity = $student->last_activity_date ? \Carbon\Carbon::parse($student->last_activity_date) : null;
-
-        if (is_null($lastActivity) || (!$lastActivity->isToday() && !$lastActivity->isYesterday())) {
-            $student->daily_streak = 1;
-        } elseif ($lastActivity->isYesterday()) {
-            $student->daily_streak += 1;
-        }
-
-        $student->last_activity_date = \Carbon\Carbon::now();
-        $student->save();
-
-        $completedTasksCount = $student->tasks()->wherePivot('status', 'completed')->count();
-        $pendingTasksCount = $student->tasks()->wherePivot('status', 'pending')->count();
-
-        $todayLessons = Lesson::where('grade_id', $student->grade_id)
-            ->whereDate('scheduled_date', Carbon::today())
-            ->get();
-
-        return response()->json([
-            'student_name'          => $user->full_name,
-            'grade_id'              => $student->grade_id,
-            'grade_name'            => $student->grade->name,
-            'points_balance'        => $student->points_balance,
-            'daily_streak'          => $student->daily_streak,
-            'rank'                  => $rank,
-            'leaderboard'           => $leaderboard,
-            'completed_tasks_count' => $completedTasksCount,
-            'pending_tasks_count'   => $pendingTasksCount,
-            'today_lessons'         => $todayLessons,
-        ]);
+        return response()->json($data, 200);
     }
 }

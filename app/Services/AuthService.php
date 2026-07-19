@@ -3,11 +3,10 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Throwable;
+use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
@@ -15,63 +14,56 @@ class AuthService
     {
         $user = User::where('username', $username)->first();
 
-        if (!$user || !Hash::check($password, $user->password)) {
-            abort(response()->json([
-                'message' => 'Invalid credentials'
-            ], 401));
+       if (!$user || !Hash::check($password, $user->password)) {
+            throw ValidationException::withMessages([
+                'username' => ['بيانات الدخول غير صحيحة.']
+            ]);
         }
-
         $token = $user->createToken('auth_token')->plainTextToken;
-
-
-
         return [
             'user' => $user,
             'token' => $token,
         ];
     }
 
-    public function forgotPassword(string $username)
+
+
+    public function logout(User $user): void
     {
-        try {
-            DB::transaction(function () use ($username) {
+        $user->tokens()->delete();
+    }
 
-                $user = User::where('username', $username)->firstOrFail();
+    public function forgotPassword(string $username): void
+    {
+        $user = User::where('username', $username)->first();
 
-                DB::table('password_resets')
-                    ->where('username', $username)
-                    ->where('status', 'pending')
-                    ->delete();
-
-                DB::table('password_resets')->insert([
-                    'username'   => $username,
-                    'token'      => Str::random(60),
-                    'status'     => 'pending',
-                    'created_at' => now(),
-                ]);
-            });
-                
-            return response()->json([
-                'status'  => 'success',
-                'message' => 'تمت العملية بنجاح، وجاري معالجة طلبك.'
-            ], 200);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'اسم المستخدم هذا غير مسجل لدينا في النظام!'
-            ], 404);
-        } catch (Throwable $e) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'حدث خطأ داخلي في السيرفر، يرجى المحاولة لاحقاً.',
-            ], 500);
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'username' => ['اسم المستخدم هذا غير مسجل لدينا في النظام!']
+            ]);
         }
+
+        DB::transaction(function () use ($username) {
+            DB::table('password_resets')
+                ->where('username', $username)
+                ->where('status', 'pending')
+                ->delete();
+
+            DB::table('password_resets')->insert([
+                'username'   => $username,
+                'token'      => Str::random(60),
+                'status'     => 'pending',
+                'created_at' => now(),
+            ]);
+        });
     }
 
     public function changePassword(User $user, string $currentPassword, string $newPassword): void
     {
         if (!Hash::check($currentPassword, $user->password)) {
-            throw new \Exception('كلمة المرور الحالية غير صحيحة.');
+            throw ValidationException::withMessages([
+                'current_password' => ['كلمة المرور الحالية غير صحيحة.']
+            ]);
         }
 
         $user->password = Hash::make($newPassword);

@@ -8,60 +8,55 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
-use App\Services\ActivityLogger;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    protected $authService;
 
-    public function login(LoginRequest $request, AuthService $authService)
+    public function __construct(AuthService $authService)
     {
-        $result = $authService->login(
+        $this->authService = $authService;
+    }
+    public function login(LoginRequest $request)
+    {
+        $result = $this->authService->login(
             $request->username,
             $request->password
         );
 
-
         return response()->json([
-            'message' => 'Login successful',
-            'token' => $result['token'],
-            'user' => new UserResource($result['user']),
+            'message' => 'تم تسجيل الدخول بنجاح',
+            'token'   => $result['token'],
+            'user'    => new UserResource($result['user']),
         ]);
     }
 
-
     public function logout(Request $request)
     {
-        if (!$request->user()) {
-            return response()->json([
-                'message' => 'المستخدم غير مصرح له بتسجيل الخروج.'
-            ], 401);
-        }
-        $request->user()->currentAccessToken()->delete();
+        $this->authService->logout($request->user());
+
         return response()->json([
             'message' => 'تم تسجيل الخروج بنجاح.'
         ]);
     }
 
-
-    public function forgotPassword(ForgotPasswordRequest $request, AuthService $authService)
+    public function forgotPassword(ForgotPasswordRequest $request)
     {
-        $response = $authService->forgotPassword($request->username);
-        return $response;
+        $this->authService->forgotPassword($request->username);
+
+        return response()->json([
+            'message' => 'تمت العملية بنجاح، وجاري معالجة طلبك.'
+        ]);
     }
 
-
-
-
-    public function changePassword(ChangePasswordRequest $request, AuthService $authService)
+    public function changePassword(ChangePasswordRequest $request)
     {
-        $authService->changePassword(
+        $this->authService->changePassword(
             $request->user(),
             $request->input('current_password'),
             $request->input('new_password')
         );
-
 
         return response()->json([
             'message' => 'تم تغيير كلمة المرور بنجاح.'

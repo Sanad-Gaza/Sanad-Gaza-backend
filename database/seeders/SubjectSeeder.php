@@ -1,13 +1,8 @@
 <?php
-
 namespace Database\Seeders;
-
-use App\Models\Grade;
 use App\Models\Subject;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-
 class SubjectSeeder extends Seeder
 {
     use WithoutModelEvents;

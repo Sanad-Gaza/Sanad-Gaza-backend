@@ -6,6 +6,7 @@ use App\Models\Lesson;
 use App\Models\Student;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class StudentDashboardService
@@ -44,6 +45,8 @@ class StudentDashboardService
 
         $student->last_activity_date = Carbon::now();
         $student->save();
+        // dd('تم تنفيذ السيرفس بنجاح!', $student->fresh()->last_activity_date);
+        // Log::info("تم تنفيذ السيرفس بنجاح!");
 
         // 4. إحصائيات المهام والدروس
         $completedTasksCount = $student->tasks()->wherePivot('status', 'completed')->count();

@@ -41,9 +41,9 @@ class StudentService
         });
     }
 
-   public function getAllStudents($perPage = 15)
+    public function getAllStudents()
     {
-        return Student::with(['user', 'grade'])->paginate($perPage);
+        return Student::with(['user', 'grade'])->get();
     }
 
 

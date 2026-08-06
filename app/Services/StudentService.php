@@ -102,9 +102,14 @@ class StudentService
         });
     }
 
+
     public function getStudentSubjects($id)
     {
-        $student = Student::with('subjects')->findOrFail($id);
-        return $student->subjects;
+        $student = Student::findOrFail($id);
+        $grades = $student->sections()->with('subjects')->get();
+        $subjects = $grades->flatMap(function ($grade) {
+            return $grade->subjects;
+        })->unique('id')->values();
+        return $subjects;
     }
 }

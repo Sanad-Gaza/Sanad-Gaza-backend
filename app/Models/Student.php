@@ -70,4 +70,10 @@ class Student extends Model
 {
     return $this->belongsTo(Section::class);
 }
+
+public function subjects()
+{
+    return $this->belongsToMany(Subject::class, 'student_subject')
+                ->withTimestamps();
+}
 }

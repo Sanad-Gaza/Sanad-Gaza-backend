@@ -13,15 +13,16 @@ class ProfileController extends Controller
     public function show(Request $request)
     {
         if ($request->user()->role === 'student') {
+            // أضفنا 'section' لجلب تفاصيل الشعبة للطالب
             $student = $request->user()->student
-                ->load('user', 'grade');
+                ->load('user', 'grade', 'section');
             return response()->json([
                 'student' => new StudentResource($student),
-
             ]);
         } elseif ($request->user()->role === 'teacher') {
+            // أضفنا 'sections' لجلب الشعب التي يدرسها المعلم
             $teacher = $request->user()->teacher
-                ->load('user'); 
+                ->load('user', 'subject', 'sections');
             return response()->json([
                 'teacher' => new TeacherResource($teacher),
             ]);

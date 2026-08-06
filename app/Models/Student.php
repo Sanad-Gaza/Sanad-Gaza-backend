@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Student extends Model
 {
@@ -12,7 +13,7 @@ class Student extends Model
     protected $fillable = [
         'user_id',
         'grade_id',
-        'section',
+        'section_id',
         'health_status',
         'gender',
         'birth_date',
@@ -47,4 +48,26 @@ class Student extends Model
             ->withPivot('status', 'stars')
             ->withTimestamps();
     }
+
+
+
+
+    public function scopeTopPerformers($query, $limit = 3)
+    {
+        return $query->orderBy('points_balance', 'desc')
+            ->orderBy('daily_streak', 'desc')
+            ->take($limit);
+    }
+
+
+    public function scopeLowActivity($query, $days = 7)
+    {
+        return $query->where('last_activity_date', '<', Carbon::now()->subDays($days))
+            ->orWhereNull('last_activity_date');
+    }
+
+    public function section()
+{
+    return $this->belongsTo(Section::class);
+}
 }

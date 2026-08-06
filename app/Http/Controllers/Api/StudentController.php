@@ -57,4 +57,12 @@ class StudentController extends Controller
             'message' => 'تم حذف حساب الطالب بنجاح',
         ], 200);
     }
+
+    public function getStudentSubjects($id)
+    {
+        $subjects = $this->studentService->getStudentSubjects($id);
+        return response()->json([
+            'data' => $subjects,
+        ], 200);
+    }
 }

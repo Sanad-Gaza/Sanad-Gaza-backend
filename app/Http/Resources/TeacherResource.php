@@ -29,6 +29,7 @@ class TeacherResource extends JsonResource
             'profile'        => new UserResource($this->whenLoaded('user')),
             //   SubjectResource
             'subject'        => new SubjectResource($this->whenLoaded('subject')),
+            'sections'       => $this->whenLoaded('sections'),
         ];
     }
 }

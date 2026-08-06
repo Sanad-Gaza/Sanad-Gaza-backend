@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Api\TeacherController;
 use App\Http\Controllers\Api\StudentDashboardController;
 use App\Http\Controllers\Api\SubjectContentController;
+use App\Models\Section;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -52,6 +54,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/teachers/{id}', [TeacherController::class, 'show']);
         Route::put('/teachers/{id}', [TeacherController::class, 'update']);
         Route::delete('/teachers/{id}', [TeacherController::class, 'destroy']);
+
+        Route::post('/sections', function (Request $request) {
+            $request->validate(['grade_id' => 'required|exists:grades,id', 'name' => 'required']);
+            return Section::create($request->all());
+        });
     });
 
     Route::middleware('role:student')->group(function () {
@@ -60,7 +67,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/subjects/{subject_id}/content', [SubjectContentController::class, 'getContent']);
         Route::get('/subjects/{subject_id}/map', [SubjectContentController::class, 'getSubjectMap']);
         Route::post('/tasks/{task_id}/complete', [SubjectContentController::class, 'completeTask']);
+        Route::get('/students/{id}/subjects', [StudentController::class, 'getStudentSubjects']);
     });
 
-    Route::middleware('role:teacher')->group(function () {});
+    Route::middleware('role:teacher')->group(function () {
+        // Route::get('/teacher/dashboard', [TeacherDashboardController::class, 'index']);
+    });
 });

@@ -28,7 +28,7 @@ class StoreStudentRequest extends FormRequest
 
             // بيانات الطالب الإضافية (جدول students)
             'grade_id'         => ['required', 'integer', 'exists:grades,id'],
-            'section'          => ['nullable', 'string', 'max:255'],  // الشعبة الدراسية
+            'section_id'       => ['required', 'exists:sections,id'],
             'health_status'    => ['nullable', 'string', 'max:255'],  // الحالة الصحية
             'parent_phone'     => ['nullable', 'string'],
             'gender'           => ['nullable', 'in:male,female'],
@@ -53,6 +53,8 @@ class StoreStudentRequest extends FormRequest
             'password.required'           => 'كلمة المرور مطلوبة.',
             'password.min'                => 'كلمة المرور يجب أن لا تقل عن 8 أحرف.',
             'phone_number.unique' => 'رقم الهاتف مسجل مسبقاً.',
+            'section_id.required' => 'تحديد القسم مطلوب.',
+            'section_id.exists'   => 'القسم المحدد غير موجود في النظام.',
             'status.in'           => 'حالة الحساب غير صالحة.',
             'grade_id.required'     => 'تحديد الصف الدراسي مطلوب.',
             'grade_id.exists'       => 'الصف الدراسي المحدد غير موجود في النظام.',

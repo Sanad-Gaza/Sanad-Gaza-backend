@@ -34,6 +34,8 @@ class StoreTeacherRequest extends FormRequest
             'qualification'    => ['nullable', 'string', 'max:255'],
             'graduation_year'  => ['nullable', 'digits:4'],
             'specialization'   => ['nullable', 'string', 'max:255'],
+            'section_ids' => 'required|array',
+            'section_ids.*' => 'exists:sections,id',
             'bio'              => ['nullable', 'string'],
         ];
     }
@@ -57,6 +59,9 @@ class StoreTeacherRequest extends FormRequest
             'status.in'           => 'حالة الحساب غير صالحة.',
             'subject_id.required' => 'تحديد المادة الدراسية مطلوب.',
             'subject_id.exists'   => 'المادة الدراسية المحددة غير موجودة في النظام.',
+            'section_ids.required' => 'تحديد الشعوب مطلوب.',
+            'section_ids.array'    => 'الشعوب يجب أن تكون مجموعة.',
+            'section_ids.*.exists' => 'الشعب المحددة غير موجودة في النظام.',
         ];
     }
 }

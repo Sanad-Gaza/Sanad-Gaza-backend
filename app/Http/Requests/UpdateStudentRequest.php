@@ -32,7 +32,7 @@ class UpdateStudentRequest extends FormRequest
             'status'           => ['nullable', 'in:active,inactive'],
 
             'grade_id'         => ['required', 'integer', 'exists:grades,id'],
-            'section'          => ['nullable', 'string', 'max:255'],
+            'section_id'       => ['required', 'exists:sections,id'],
             'health_status'    => ['nullable', 'string', 'max:255'],
             'parent_phone'     => ['nullable', 'string'],
             'gender'           => ['nullable', 'in:male,female'],

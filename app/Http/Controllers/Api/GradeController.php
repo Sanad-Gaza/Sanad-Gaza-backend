@@ -16,7 +16,7 @@ class GradeController extends Controller
     {
         $grade = $gradeService->createGrade($request->validated());
 
-        ActivityLogger::log('إضافة صف', 'تم إضافة صف جديد: ' . $grade->name, 'نجاح');
+        // ActivityLogger::log('إضافة صف', 'تم إضافة صف جديد: ' . $grade->name, 'نجاح');
 
         return response()->json([
             'message' => 'تم إنشاء الصف بنجاح',

@@ -28,6 +28,8 @@ class UpdateTeacherRequest extends FormRequest
             'status'         => ['nullable', 'in:active,inactive'],
             'subject_id'     => ['required', 'integer', 'exists:subjects,id'],
             'specialization' => ['nullable', 'string', 'max:255'],
+            'section_ids' => 'required|array',
+            'section_ids.*' => 'exists:sections,id',
             'bio'            => ['nullable', 'string'],
         ];
     }

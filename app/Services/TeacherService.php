@@ -38,13 +38,17 @@ class TeacherService
                 'bio'              => $data['bio'] ?? null,
             ]);
 
-            return $teacher->load(['user', 'subject']);
+            if (isset($data['section_ids'])) {
+                $teacher->sections()->sync($data['section_ids']);
+            }
+
+            return $teacher->load(['user', 'subject', 'sections']); // أضف sections هنا
         });
     }
 
     public function getAllTeachers()
     {
-        return Teacher::with(['user', 'subject'])->get();
+        return Teacher::with(['user', 'subject', 'sections'])->get();
     }
 
     public function getTeacherById($id)
@@ -76,13 +80,17 @@ class TeacherService
 
             $user->update($userData);
 
+            if (isset($data['section_ids'])) {
+                $teacher->sections()->sync($data['section_ids']);
+            }
+
             $teacher->update([
                 'subject_id'     => $data['subject_id'],
                 'specialization' => $data['specialization'] ?? $teacher->specialization,
                 'bio'            => $data['bio'] ?? $teacher->bio,
             ]);
 
-            return $teacher->load(['user', 'subject']);
+            return $teacher->load(['user', 'subject', 'sections']);
         });
     }
 

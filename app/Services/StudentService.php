@@ -31,7 +31,7 @@ class StudentService
             $student = Student::create([
                 'user_id'       => $user->id,
                 'grade_id'      => $data['grade_id'],
-                'section'       => $data['section'] ?? null,
+                'section_id'    => $data['section_id'] ?? null,
                 'health_status' => $data['health_status'] ?? null,
                 'gender'        => $data['gender'] ?? null,
                 'birth_date'    => $data['birth_date'] ?? null,
@@ -81,7 +81,7 @@ class StudentService
 
             $student->update([
                 'grade_id'      => $data['grade_id'],
-                'section'       => $data['section'] ?? $student->section,
+                'section_id'    => $data['section_id'] ?? $student->section_id,
                 'health_status' => $data['health_status'] ?? $student->health_status,
                 'parent_phone'  => $data['parent_phone'] ?? $student->parent_phone,
                 'gender'        => $data['gender'] ?? $student->gender,
@@ -100,5 +100,11 @@ class StudentService
             $student->user->delete();
             return true;
         });
+    }
+
+    public function getStudentSubjects($id)
+    {
+        $student = Student::with('subjects')->findOrFail($id);
+        return $student->subjects;
     }
 }

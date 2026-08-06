@@ -57,4 +57,6 @@ class StudentController extends Controller
             'message' => 'تم حذف حساب الطالب بنجاح',
         ], 200);
     }
+
+    
 }

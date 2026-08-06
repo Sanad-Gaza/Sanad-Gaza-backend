@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SubjectResource;
 use App\Services\SubjectContentService;
 use Illuminate\Http\Request;
 
@@ -35,4 +36,5 @@ class SubjectContentController extends Controller
 
         return response()->json($data, 200);
     }
+
 }

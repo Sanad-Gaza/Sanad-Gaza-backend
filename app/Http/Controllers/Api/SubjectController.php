@@ -7,6 +7,7 @@ use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
 use App\Services\SubjectService;
 use App\Http\Resources\SubjectResource;
+use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
@@ -54,6 +55,17 @@ class SubjectController extends Controller
 
         return response()->json([
             'message' => 'تم حذف المادة بنجاح',
+        ], 200);
+    }
+
+
+    // جلب مواد الطالب المسجل للدخول
+   public function studentSubjects(\Illuminate\Http\Request $request, SubjectService $subjectService)
+    {
+        $subjectsData = $subjectService->getStudentSubjects($request->user());
+
+        return response()->json([
+            'data' => $subjectsData
         ], 200);
     }
 }

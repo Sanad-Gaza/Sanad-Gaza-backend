@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder
 
         // $this->call([GradeSeeder::class]);
 
-        $this->call([SubjectSeeder2::class]);
+        $this->call([SubjectSeeder::class]);
 
-        $this->call([TeacherSeeder2::class]);
+        $this->call([TeacherSeeder::class]);
 
-        $this->call([StudentSeeder2::class]);
+        $this->call([StudentSeeder::class]);
 
-        $this->call([SubjectContentSeeder2::class]);
+        $this->call([SubjectContentSeeder::class]);
 
-        $this->call([LanguagesContentSeeder2::class]);
+        $this->call([LanguagesContentSeeder::class]);
     }
 }

@@ -21,6 +21,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/change-password', [AuthController::class, 'changePassword']);
 
+    Route::get('/student/subjects', [SubjectController::class, 'studentSubjects']);
+
 
     Route::middleware('role:admin')->group(function () {
         // إدارة الصفوف
@@ -60,6 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/subjects/{subject_id}/content', [SubjectContentController::class, 'getContent']);
         Route::get('/subjects/{subject_id}/map', [SubjectContentController::class, 'getSubjectMap']);
         Route::post('/tasks/{task_id}/complete', [SubjectContentController::class, 'completeTask']);
+
     });
 
     Route::middleware('role:teacher')->group(function () {});

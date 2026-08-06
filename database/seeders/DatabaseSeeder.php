@@ -19,16 +19,16 @@ class DatabaseSeeder extends Seeder
 
         $this->call([AdminUserSeeder::class]);
 
-        $this->call([GradeSeeder::class]);
+        // $this->call([GradeSeeder::class]);
 
-        $this->call([SubjectSeeder::class]);
+        // $this->call([SubjectSeeder::class]);
 
-        $this->call([TeacherSeeder::class]);
+        // $this->call([TeacherSeeder::class]);
 
-        $this->call([StudentSeeder::class]);
+        // $this->call([StudentSeeder::class]);
 
-        $this->call([SubjectContentSeeder::class]);
+        // $this->call([SubjectContentSeeder::class]);
 
-        $this->call([LanguagesContentSeeder::class]);
+        // $this->call([LanguagesContentSeeder::class]);
     }
 }
